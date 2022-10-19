@@ -12,6 +12,9 @@ const PHONE_NUMBER_FORMAT = 'E164' // https://en.wikipedia.org/wiki/E.164
   ```hbs
     {{phone-input
     autoPlaceholder='aggressive'
+    disabled=disabled
+    required=required
+    autocomplete=autocomplete
     initialCountry='fr'
     number='123'
     onlyCountries=europeanCountries
@@ -26,13 +29,42 @@ const PHONE_NUMBER_FORMAT = 'E164' // https://en.wikipedia.org/wiki/E.164
 export default Component.extend({
   tagName: 'input',
 
-  attributeBindings: ['type'],
+  attributeBindings: [
+    'type',
+    'disabled',
+    'required',
+    'autocomplete'  
+  ],
   type: 'tel',
 
   init() {
     this._super(...arguments)
-
+    
     this._iti = this._iti || null
+
+    /**
+     * Setting this to true will disabled the input and the country dropdown.
+     * Defaults to `false`
+     * @argument disabled
+     * @type {boolean}
+     */
+    this.disabled = this.disabled || false;
+
+    /**
+     * Setting this to true will make the input field required. This will enabled client side form validation.
+     * Defaults to `false`
+     * @argument required
+     * @type {boolean}
+     */
+    this.required = this.required || false;
+
+    /**
+     * `autocomplete` attribute on input field. Can be used to support browser autocompletion.
+     * Defaults to `null`
+     * @argument autocomplete
+     * @type {string}
+     */
+    this.autocomplete = this.autocomplete || null;
 
     /**
       The international phone number. This is the main data supposed
